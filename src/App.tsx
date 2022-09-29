@@ -12,6 +12,8 @@ import {
   NavList,
   Nav,
   NavItem,
+  PageSectionVariants,
+  PageHeader,
 } from '@patternfly/react-core'
 import { Link, Route } from 'react-router-dom'
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon'
@@ -26,29 +28,17 @@ import PostId from './Components/Post/PostId'
 function App() {
   const [isNavOpen, setIsNavOpen] = React.useState(false)
 
-  const onNavToggle = () => {
+  const onNavToggle = (): void => {
     setIsNavOpen(!isNavOpen)
   }
 
   const header = (
-    <Masthead>
-      <MastheadToggle>
-        <PageToggleButton
-          variant="plain"
-          aria-label="Global navigation"
-          isNavOpen={isNavOpen}
-          onNavToggle={onNavToggle}
-          id="centered-nav-toggle"
-        >
-          <BarsIcon />
-        </PageToggleButton>
-      </MastheadToggle>
-      <MastheadMain>
-        <MastheadBrand href="https://patternfly.org" target="_blank">
-          Logo
-        </MastheadBrand>
-      </MastheadMain>
-    </Masthead>
+    <PageHeader
+      showNavToggle
+      isNavOpen={isNavOpen}
+      onNavToggle={onNavToggle}
+      aria-label={'global_navigation'}
+    />
   )
 
   const Navigation = (
@@ -77,30 +67,24 @@ function App() {
   )
 
   const sidebar = (
-    <PageSidebar
-      nav={Navigation}
-      isNavOpen={isNavOpen}
-      id="centered-section-sidebar"
-    />
+    <PageSidebar nav={Navigation} isNavOpen={isNavOpen} id="vertical-sidebar" />
   )
   return (
     <>
-      <Page header={header} sidebar={sidebar}>
-        <PageSection isWidthLimited isCenterAligned>
-          <Card>
-            <Route exact path="/">
-              <Posts />
-            </Route>
-            <Route exact path="/album">
-              <Album />
-            </Route>
-            <Route exact path="/user">
-              <UserDetails />
-            </Route>
-            <Route path="/postId/*">
-              <PostId />
-            </Route>
-          </Card>
+      <Page header={header} sidebar={sidebar} role="main">
+        <PageSection isCenterAligned variant={PageSectionVariants.light}>
+          <Route exact path="/">
+            <Posts />
+          </Route>
+          <Route exact path="/album">
+            <Album />
+          </Route>
+          <Route exact path="/user">
+            <UserDetails />
+          </Route>
+          <Route path="/postId/*">
+            <PostId />
+          </Route>
         </PageSection>
       </Page>
     </>
