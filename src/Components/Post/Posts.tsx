@@ -11,6 +11,11 @@ import {
   TextContent,
 } from '@patternfly/react-core'
 import { useHistory } from 'react-router-dom'
+// import PostId from './PostId'
+
+// type Props = {
+//   idProps: number
+// }
 
 const Posts = () => {
   const history = useHistory()
@@ -40,9 +45,8 @@ const Posts = () => {
   const addMore = () => {
     setCount(count + 5)
   }
-  const showDetails = (props: number) => {
-    history.push('/PostId')
-    console.log(props)
+  const showDetails = (id: number) => {
+    history.push({ pathname: `/postId/${id}`, state: id })
   }
 
   return (
