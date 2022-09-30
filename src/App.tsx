@@ -19,9 +19,10 @@ import { Link, Route } from 'react-router-dom'
 import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon'
 import React from 'react'
 import Posts from './Components/Post/Posts'
-import Album from './Components/Album'
+import Album from './Components/Albums/Album'
 import UserDetails from './Components/UserDetails'
 import PostId from './Components/Post/PostId'
+import Photo from './Components/Albums/Photo'
 // import PostId from './Components/Post/PostId'
 // import PostId from './Components/PostId'
 
@@ -82,8 +83,11 @@ function App() {
           <Route exact path="/user">
             <UserDetails />
           </Route>
-          <Route path="/postId/*">
+          <Route exact path="/postId/*">
             <PostId />
+          </Route>
+          <Route exact path="/photo/*">
+            <Photo />
           </Route>
         </PageSection>
       </Page>
