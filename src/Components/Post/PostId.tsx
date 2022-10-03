@@ -56,20 +56,24 @@ const PostId = () => {
   }, [id])
 
   useEffect(() => {
-    axios(`https://jsonplaceholder.typicode.com/comments`)
+    axios('https://jsonplaceholder.typicode.com/comments')
       .then((response) => {
-        setCommentData(response.data)
+        setCommentData(
+          response.data?.filter(
+            (comment: { postId: any }) => comment.postId === id,
+          ),
+        )
+        console.log(commentData.length)
       })
 
       .catch((error) => {
         console.error('Error in loading data', error)
         setError(error)
       })
-  }, [postData.id])
+  }, [])
 
-  const filteredComments = commentData.filter(
-    (comment: { [x: string]: unknown }) => comment['postId'] === id,
-  )
+  const count = commentData.length
+  console.log(commentData)
 
   const onExpand = () => {
     drawerRef.current && drawerRef.current.focus()
@@ -92,16 +96,17 @@ const PostId = () => {
           ) : (
             <>
               <TextContent>
-                <Text component={TextVariants.h1}>Comments</Text>
+                <Text component={TextVariants.h1}>Comments ({count})</Text>
               </TextContent>
               <hr></hr>
-              {filteredComments.map((comment) => (
+              {commentData.map((comment) => (
                 <Card key={comment['id']}>
                   <CardHeader>
                     <CardTitle>
-                      {' '}
                       <Avatar src={avatarImg} alt="avatar" />
-                      {comment['name']}
+                    </CardTitle>
+                    <CardTitle style={{ paddingLeft: '0.5rem' }}>
+                      <Text component={TextVariants.h2}>{comment['name']}</Text>
                     </CardTitle>
                   </CardHeader>
                   <CardBody>{comment['email']}</CardBody>
@@ -137,7 +142,8 @@ const PostId = () => {
         },
         ...prevState,
       ])
-      console.log(commentData)
+
+      console.log(commentData.length)
     }
   }
   const updateComment = (name: string) => {
@@ -168,11 +174,11 @@ const PostId = () => {
                     </FlexItem>
                     <FlexItem>
                       <Button
-                        variant="primary"
+                        variant="secondary"
                         aria-expanded={isExpanded}
                         onClick={onClick}
                       >
-                        Read Comments
+                        Read Comments ({count})
                       </Button>
                     </FlexItem>
                   </Flex>
@@ -188,6 +194,8 @@ const PostId = () => {
                       aria-label="textarea with button"
                       onChange={updateComment}
                     ></TextArea>
+                    <br></br>
+                    <br></br>
                     <ActionGroup>
                       <Button
                         id="textAreaButton2"
