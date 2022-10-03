@@ -1,11 +1,13 @@
 import {
   Button,
   Card,
+  CardBody,
   CardTitle,
   Gallery,
   GalleryItem,
   PageSection,
   TextContent,
+  Truncate,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -51,14 +53,16 @@ const Album = () => {
                   showDetails(album['id'])
                 }}
                 style={{
-                  height: '10rem',
-                  padding: '1rem',
                   cursor: 'pointer',
                 }}
               >
                 {' '}
-                <label style={{ color: 'red' }}>Album - {album['id']} </label>
-                <CardTitle>{album['title']}</CardTitle>
+                <CardTitle style={{ color: 'red' }}>
+                  Album - {album['id']}{' '}
+                </CardTitle>
+                <CardBody>
+                  <Truncate content={album['title']}></Truncate>
+                </CardBody>
               </Card>
             </GalleryItem>
           ))}
