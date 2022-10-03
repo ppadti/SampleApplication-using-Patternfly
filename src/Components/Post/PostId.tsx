@@ -13,6 +13,9 @@ import {
   FlexItem,
   CardHeader,
   TextArea,
+  Panel,
+  PanelMainBody,
+  PanelMain,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -89,37 +92,43 @@ const PostId = () => {
 
   const panelContent = (
     <DrawerPanelContent>
-      <DrawerHead>
-        <span tabIndex={isExpanded ? 0 : -1}>
-          {error ? (
-            <TextContent>Something went wrong...</TextContent>
-          ) : (
-            <>
-              <TextContent>
-                <Text component={TextVariants.h1}>Comments ({count})</Text>
-              </TextContent>
-              <hr></hr>
-              {commentData.map((comment) => (
-                <Card key={comment['id']}>
-                  <CardHeader>
-                    <CardTitle>
-                      <Avatar src={avatarImg} alt="avatar" />
-                    </CardTitle>
-                    <CardTitle style={{ paddingLeft: '0.5rem' }}>
-                      <Text component={TextVariants.h2}>{comment['name']}</Text>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardBody>{comment['email']}</CardBody>
-                  <CardBody>{comment['body']}</CardBody>
-                </Card>
-              ))}
-            </>
-          )}
-        </span>
-        <DrawerActions>
-          <DrawerCloseButton onClick={onCloseClick} />
-        </DrawerActions>
-      </DrawerHead>
+      <Panel isScrollable>
+        <PanelMain maxHeight="50rem">
+          <DrawerHead>
+            <span tabIndex={isExpanded ? 0 : -1}>
+              {error ? (
+                <TextContent>Something went wrong...</TextContent>
+              ) : (
+                <>
+                  <TextContent>
+                    <Text component={TextVariants.h1}>Comments ({count})</Text>
+                  </TextContent>
+                  <hr></hr>
+                  {commentData.map((comment) => (
+                    <Card key={comment['id']}>
+                      <CardHeader>
+                        <CardTitle>
+                          <Avatar src={avatarImg} alt="avatar" />
+                        </CardTitle>
+                        <CardTitle style={{ paddingLeft: '0.5rem' }}>
+                          <Text component={TextVariants.h2}>
+                            {comment['name']}
+                          </Text>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardBody>{comment['email']}</CardBody>
+                      <CardBody>{comment['body']}</CardBody>
+                    </Card>
+                  ))}
+                </>
+              )}
+            </span>
+            <DrawerActions>
+              <DrawerCloseButton onClick={onCloseClick} />
+            </DrawerActions>
+          </DrawerHead>
+        </PanelMain>
+      </Panel>
     </DrawerPanelContent>
   )
 
