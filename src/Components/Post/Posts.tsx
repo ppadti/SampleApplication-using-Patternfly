@@ -4,11 +4,13 @@ import axios from 'axios'
 import {
   Button,
   Card,
+  CardBody,
   CardTitle,
   Gallery,
   GalleryItem,
   PageSection,
   TextContent,
+  Truncate,
 } from '@patternfly/react-core'
 import { useHistory } from 'react-router-dom'
 // import PostId from './PostId'
@@ -73,15 +75,13 @@ const Posts = () => {
                   showDetails(details['id'])
                 }}
                 style={{
-                  height: '10rem',
-                  padding: '1rem',
                   cursor: 'pointer',
                 }}
               >
-                <CardTitle>
-                  <label style={{ color: 'red' }}>Title : </label>
-                  {details['title']}
-                </CardTitle>
+                <CardTitle style={{ color: 'red' }}>Title </CardTitle>
+                <CardBody>
+                  <Truncate content={details['title']}></Truncate>
+                </CardBody>
               </Card>
             </GalleryItem>
           ))}

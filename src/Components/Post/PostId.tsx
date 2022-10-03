@@ -12,9 +12,7 @@ import {
   Flex,
   FlexItem,
   CardHeader,
-  Form,
   TextArea,
-  InputGroup,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -44,7 +42,6 @@ const PostId = () => {
   const drawerRef = React.useRef<HTMLDivElement>()
   const [showing, setShowing] = useState(false)
   const [comment, setComment] = useState('')
-  const [count, setCount] = useState(0)
 
   useEffect(() => {
     axios(`https://jsonplaceholder.typicode.com/posts/${id}`)
@@ -182,7 +179,7 @@ const PostId = () => {
                 </ActionGroup>
                 <br></br>
                 {showing && (
-                  <InputGroup>
+                  <>
                     <TextArea
                       placeholder="Enter your comment"
                       value={comment}
@@ -200,7 +197,7 @@ const PostId = () => {
                         Add
                       </Button>
                     </ActionGroup>
-                  </InputGroup>
+                  </>
                 )}
               </PageSection>
             </>
