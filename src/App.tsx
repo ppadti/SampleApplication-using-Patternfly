@@ -83,10 +83,10 @@ function App() {
           <Route exact path="/user">
             <UserDetails />
           </Route>
-          <Route exact path="/postId/*">
+          <Route exact path="/post/*">
             <PostId />
           </Route>
-          <Route exact path="/photo/*">
+          <Route exact path="/album/*/photos">
             <Photo />
           </Route>
         </PageSection>

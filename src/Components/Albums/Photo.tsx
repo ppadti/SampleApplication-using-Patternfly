@@ -6,6 +6,7 @@ import {
   GalleryItem,
   PageSection,
   TextContent,
+  Truncate,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -39,18 +40,18 @@ const Photo = () => {
       ) : (
         <PageSection>
           <Gallery hasGutter>
-            {filteredPhotos.map(
-              (album: { [x: string]: string | undefined }) => (
-                <GalleryItem key={album['id']}>
-                  <Card>
-                    <CardTitle>{album['title']}</CardTitle>
-                    <CardBody>
-                      <img src={album['thumbnailUrl']} alt="img"></img>
-                    </CardBody>
-                  </Card>
-                </GalleryItem>
-              ),
-            )}
+            {filteredPhotos.map((album) => (
+              <GalleryItem key={album['id']}>
+                <Card>
+                  <CardTitle>
+                    <Truncate content={album['title']}></Truncate>
+                  </CardTitle>
+                  <CardBody>
+                    <img src={album['thumbnailUrl']} alt="img"></img>
+                  </CardBody>
+                </Card>
+              </GalleryItem>
+            ))}
           </Gallery>
         </PageSection>
       )}

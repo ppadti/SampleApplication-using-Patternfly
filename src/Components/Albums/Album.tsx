@@ -38,7 +38,7 @@ const Album = () => {
 
   const showDetails = (id: number) => {
     console.log(id)
-    history.push({ pathname: `/photo/${id}`, state: id })
+    history.push({ pathname: `/album/${id}/photos`, state: id })
   }
 
   return (

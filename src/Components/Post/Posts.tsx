@@ -48,7 +48,7 @@ const Posts = () => {
     setCount(count + 5)
   }
   const showDetails = (id: number) => {
-    history.push({ pathname: `/postId/${id}`, state: id })
+    history.push({ pathname: `/post/${id}`, state: id })
   }
 
   return (
