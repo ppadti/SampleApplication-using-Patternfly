@@ -16,6 +16,9 @@ import {
   Panel,
   PanelMainBody,
   PanelMain,
+  Form,
+  FormGroup,
+  TextInput,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -89,11 +92,53 @@ const PostId = () => {
   const onCloseClick = () => {
     setIsExpanded(false)
   }
+  const handleCommentSection = () => {
+    setShowing(!showing)
+    setComment('')
+    setEmail('')
+    setName('')
+  }
+
+  const addComment = () => {
+    if (comment && name && email) {
+      setComment('')
+      setEmail('')
+      setName('')
+
+      setCommentData((prevState) => [
+        ...prevState,
+        {
+          postId: id,
+          id: id,
+          name: name,
+          email: email,
+          body: comment,
+        },
+      ])
+
+      console.log(commentData.length)
+    }
+  }
+
+  const [name, setName] = React.useState('')
+  const [email, setEmail] = React.useState('')
+
+  const handleNameChange = (name: string) => {
+    setName(name)
+  }
+
+  const handleEmailChange = (email: string) => {
+    setEmail(email)
+  }
+
+  const updateComment = (name: string) => {
+    setComment(name)
+  }
 
   const panelContent = (
     <DrawerPanelContent>
       <Panel isScrollable>
-        <PanelMain maxHeight="50rem">
+        <PanelMain maxHeight="70rem">
           <DrawerHead>
             <span tabIndex={isExpanded ? 0 : -1}>
               {error ? (
@@ -103,7 +148,8 @@ const PostId = () => {
                   <TextContent>
                     <Text component={TextVariants.h1}>Comments ({count})</Text>
                   </TextContent>
-                  <hr></hr>
+
+                  {/* <hr></hr> */}
                   {commentData.map((comment) => (
                     <Card key={comment['id']}>
                       <CardHeader>
@@ -120,6 +166,68 @@ const PostId = () => {
                       <CardBody>{comment['body']}</CardBody>
                     </Card>
                   ))}
+                  <br></br>
+                  <Button variant="primary" onClick={handleCommentSection}>
+                    Add Comment
+                  </Button>
+                  {showing && (
+                    <>
+                      <Form>
+                        <FormGroup
+                          label="Full name"
+                          isRequired
+                          fieldId="simple-form-name-01"
+                        >
+                          <TextInput
+                            isRequired
+                            type="text"
+                            id="simple-form-name-01"
+                            name="simple-form-name-01"
+                            aria-describedby="simple-form-name-01-helper"
+                            value={name}
+                            onChange={handleNameChange}
+                          />
+                        </FormGroup>
+                        <FormGroup
+                          label="Email"
+                          isRequired
+                          fieldId="simple-form-email-01"
+                        >
+                          <TextInput
+                            isRequired
+                            type="email"
+                            id="simple-form-email-01"
+                            name="simple-form-email-01"
+                            value={email}
+                            onChange={handleEmailChange}
+                          />
+                        </FormGroup>
+                        <FormGroup
+                          label="Your comments"
+                          isRequired
+                          fieldId="horizontal-form-exp"
+                        >
+                          <TextArea
+                            placeholder="Enter your comment"
+                            value={comment}
+                            name="inputGroup-with-textarea"
+                            id="inputGroup-with-textarea"
+                            aria-label="textarea with button"
+                            onChange={updateComment}
+                          ></TextArea>
+                        </FormGroup>
+                        <ActionGroup>
+                          <Button
+                            id="textAreaButton2"
+                            variant="primary"
+                            onClick={addComment}
+                          >
+                            Add
+                          </Button>
+                        </ActionGroup>
+                      </Form>
+                    </>
+                  )}
                 </>
               )}
             </span>
@@ -132,32 +240,6 @@ const PostId = () => {
     </DrawerPanelContent>
   )
 
-  const handleCommentSection = () => {
-    setShowing(!showing)
-    setComment('')
-  }
-
-  const addComment = () => {
-    if (comment) {
-      setComment('')
-
-      setCommentData((prevState) => [
-        {
-          postId: id,
-          id: id,
-          name: 'Pushpa',
-          email: 'pushpa@gmail.com',
-          body: comment,
-        },
-        ...prevState,
-      ])
-
-      console.log(commentData.length)
-    }
-  }
-  const updateComment = (name: string) => {
-    setComment(name)
-  }
   return (
     <Drawer isExpanded={isExpanded} onExpand={onExpand}>
       <DrawerContent panelContent={panelContent}>
@@ -175,47 +257,14 @@ const PostId = () => {
                 <br></br>
 
                 <ActionGroup>
-                  <Flex>
-                    <FlexItem>
-                      <Button variant="primary" onClick={handleCommentSection}>
-                        Add Comment
-                      </Button>
-                    </FlexItem>
-                    <FlexItem>
-                      <Button
-                        variant="secondary"
-                        aria-expanded={isExpanded}
-                        onClick={onClick}
-                      >
-                        Read Comments ({count})
-                      </Button>
-                    </FlexItem>
-                  </Flex>
+                  <Button
+                    variant="secondary"
+                    aria-expanded={isExpanded}
+                    onClick={onClick}
+                  >
+                    Read Comments ({count})
+                  </Button>
                 </ActionGroup>
-                <br></br>
-                {showing && (
-                  <>
-                    <TextArea
-                      placeholder="Enter your comment"
-                      value={comment}
-                      name="inputGroup-with-textarea"
-                      id="inputGroup-with-textarea"
-                      aria-label="textarea with button"
-                      onChange={updateComment}
-                    ></TextArea>
-                    <br></br>
-                    <br></br>
-                    <ActionGroup>
-                      <Button
-                        id="textAreaButton2"
-                        variant="primary"
-                        onClick={addComment}
-                      >
-                        Add
-                      </Button>
-                    </ActionGroup>
-                  </>
-                )}
               </PageSection>
             </>
           )}
