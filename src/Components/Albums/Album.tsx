@@ -1,13 +1,8 @@
 import {
   Button,
-  Card,
-  CardBody,
-  CardTitle,
   Gallery,
-  GalleryItem,
   PageSection,
   TextContent,
-  Truncate,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -37,8 +32,7 @@ const Album = () => {
   }
 
   const showDetails = (id: number) => {
-    console.log(id)
-    history.push({ pathname: `/photo/${id}`, state: id })
+    history.push({ pathname: `/album/${id}/photos`, state: id })
   }
 
   return (
@@ -47,24 +41,17 @@ const Album = () => {
       <PageSection>
         <Gallery hasGutter>
           {data?.slice(0, count).map((album) => (
-            <GalleryItem key={album['id']}>
-              <Card
-                onClick={() => {
-                  showDetails(album['id'])
-                }}
-                style={{
-                  cursor: 'pointer',
-                }}
-              >
-                {' '}
-                <CardTitle style={{ color: 'red' }}>
-                  Album - {album['id']}{' '}
-                </CardTitle>
-                <CardBody>
-                  <Truncate content={album['title']}></Truncate>
-                </CardBody>
-              </Card>
-            </GalleryItem>
+            <Button
+              key={album['id']}
+              isLarge
+              component="a"
+              variant="secondary"
+              onClick={() => {
+                showDetails(album['id'])
+              }}
+            >
+              Album - {album['id']}
+            </Button>
           ))}
         </Gallery>
         <br></br>

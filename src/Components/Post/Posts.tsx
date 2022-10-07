@@ -48,7 +48,7 @@ const Posts = () => {
     setCount(count + 5)
   }
   const showDetails = (id: number) => {
-    history.push({ pathname: `/postId/${id}`, state: id })
+    history.push({ pathname: `/post/${id}`, state: id })
   }
 
   return (
@@ -69,21 +69,17 @@ const Posts = () => {
       <PageSection>
         <Gallery hasGutter>
           {data?.slice(0, count).map((details) => (
-            <GalleryItem key={details['id']}>
-              <Card
-                onClick={() => {
-                  showDetails(details['id'])
-                }}
-                style={{
-                  cursor: 'pointer',
-                }}
-              >
-                <CardTitle style={{ color: 'red' }}>Title </CardTitle>
-                <CardBody>
-                  <Truncate content={details['title']}></Truncate>
-                </CardBody>
-              </Card>
-            </GalleryItem>
+            <Button
+              key={details['id']}
+              isLarge
+              component="a"
+              variant="secondary"
+              onClick={() => {
+                showDetails(details['id'])
+              }}
+            >
+              Post - {details['id']}
+            </Button>
           ))}
         </Gallery>
         <br></br>

@@ -23,6 +23,7 @@ import Album from './Components/Albums/Album'
 import UserDetails from './Components/UserDetails'
 import PostId from './Components/Post/PostId'
 import Photo from './Components/Albums/Photo'
+import SinglePhoto from './Components/Albums/SinglePhoto'
 // import PostId from './Components/Post/PostId'
 // import PostId from './Components/PostId'
 
@@ -83,11 +84,14 @@ function App() {
           <Route exact path="/user">
             <UserDetails />
           </Route>
-          <Route exact path="/postId/*">
+          <Route exact path="/post/*">
             <PostId />
           </Route>
-          <Route exact path="/photo/*">
+          <Route exact path="/album/*/photos">
             <Photo />
+          </Route>
+          <Route exact path="/album/*/photos/*">
+            <SinglePhoto />
           </Route>
         </PageSection>
       </Page>
