@@ -26,7 +26,6 @@ import {
   Flex,
   FlexItem,
   PageSectionVariants,
-  CardFooter,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -93,9 +92,9 @@ const PostId = () => {
   }, [postData.userId])
   console.log(userData)
 
-  const onExpand = () => {
-    drawerRef.current && drawerRef.current.focus()
-  }
+  // const onExpand = () => {
+  //   drawerRef.current && drawerRef.current.focus()
+  // }
 
   const onClick = () => {
     setIsExpanded(!isExpanded)
@@ -200,7 +199,11 @@ const PostId = () => {
                 </Card>
               </>
             ))}
-            <Button variant="primary" onClick={handleCommentSection}>
+            <Button
+              variant="primary"
+              onClick={handleCommentSection}
+              style={{ marginBottom: '1rem' }}
+            >
               Add Comment
             </Button>
             {showing && (
@@ -249,7 +252,11 @@ const PostId = () => {
                   ></TextArea>
                 </FormGroup>
                 <ActionGroup>
-                  <Button variant="primary" onClick={addComment}>
+                  <Button
+                    variant="primary"
+                    onClick={addComment}
+                    style={{ marginBottom: '1rem' }}
+                  >
                     Add
                   </Button>
                 </ActionGroup>
@@ -263,52 +270,58 @@ const PostId = () => {
 
   const pageContent = (
     <>
-      {postError ? (
-        <TextContent>Something went wrong...</TextContent>
-      ) : (
-        <PageSection>
-          <Card style={{ marginBottom: '1rem' }}>
-            <CardTitle>
-              <TextContent>
-                <Text component={TextVariants.h1}>{postData.title}</Text>
-              </TextContent>{' '}
-              <Flex>
-                <FlexItem>
-                  <TextContent>
-                    <Text component={TextVariants.small}>
-                      {' '}
-                      by {userData.username}
-                    </Text>
-                  </TextContent>
-                </FlexItem>
-                <FlexItem>
-                  {' '}
-                  <Button isInline component="span" variant="link">
-                    - {userData.email}
-                  </Button>
-                </FlexItem>
-              </Flex>
-            </CardTitle>
-            <CardBody>{postData.body}</CardBody>
-          </Card>
+      {' '}
+      <PageSection variant={PageSectionVariants.light}>
+        {postError ? (
+          <TextContent>Something went wrong...</TextContent>
+        ) : (
+          <>
+            <Card style={{ marginBottom: '1rem' }}>
+              <CardTitle>
+                <TextContent>
+                  <Text component={TextVariants.h1}>{postData.title}</Text>
+                </TextContent>{' '}
+                <Flex>
+                  <FlexItem>
+                    <TextContent>
+                      <Text component={TextVariants.small}>
+                        {' '}
+                        by {userData.username}
+                      </Text>
+                    </TextContent>
+                  </FlexItem>
+                  <FlexItem>
+                    {' '}
+                    <Button isInline component="span" variant="link">
+                      - {userData.email}
+                    </Button>
+                  </FlexItem>
+                </Flex>
+              </CardTitle>
+              <CardBody>{postData.body}</CardBody>
+            </Card>
 
-          <ActionGroup>
-            <Button
-              variant="secondary"
-              aria-expanded={isExpanded}
-              onClick={onClick}
-            >
-              Read Comments ({count})
-            </Button>
-          </ActionGroup>
-        </PageSection>
-      )}
+            <ActionGroup>
+              <Button
+                variant="secondary"
+                aria-expanded={isExpanded}
+                onClick={onClick}
+              >
+                Read Comments ({count})
+              </Button>
+            </ActionGroup>
+          </>
+        )}
+      </PageSection>
     </>
   )
+  
   return (
-    <Drawer isExpanded={isExpanded} onExpand={onExpand}>
-      <DrawerContent panelContent={panelContent}>{pageContent}</DrawerContent>
-    </Drawer>
+    <>
+      <Drawer isExpanded={isExpanded}>
+        <DrawerContent panelContent={panelContent}>{pageContent}</DrawerContent>
+      </Drawer>
+    </>
   )
 }
 

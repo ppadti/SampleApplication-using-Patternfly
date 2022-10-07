@@ -3,21 +3,12 @@ import axios from 'axios'
 // import { TailSpin } from 'react-loader-spinner'
 import {
   Button,
-  Card,
-  CardBody,
-  CardTitle,
   Gallery,
-  GalleryItem,
   PageSection,
+  PageSectionVariants,
   TextContent,
-  Truncate,
 } from '@patternfly/react-core'
 import { useHistory } from 'react-router-dom'
-// import PostId from './PostId'
-
-// type Props = {
-//   idProps: number
-// }
 
 const Posts = () => {
   const history = useHistory()
@@ -53,8 +44,9 @@ const Posts = () => {
 
   return (
     <>
-      {error ? <TextContent>Something went wrong...</TextContent> : ''}
-      {/* {loading ? (
+      <PageSection variant={PageSectionVariants.light}>
+        {error ? <TextContent>Something went wrong...</TextContent> : ''}
+        {/* {loading ? (
         <TailSpin
           height="80"
           width="80"
@@ -66,7 +58,7 @@ const Posts = () => {
           visible={true}
         />
       ) : ( */}
-      <PageSection>
+
         <Gallery hasGutter>
           {data?.slice(0, count).map((details) => (
             <Button
@@ -82,12 +74,15 @@ const Posts = () => {
             </Button>
           ))}
         </Gallery>
-        <br></br>
-        <Button variant="primary" onClick={addMore}>
+
+        <Button
+          variant="primary"
+          onClick={addMore}
+          style={{ marginTop: '1rem' }}
+        >
           Load more
         </Button>
       </PageSection>
-      {/* )} */}
     </>
   )
 }

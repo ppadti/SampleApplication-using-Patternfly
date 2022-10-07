@@ -5,6 +5,8 @@ import {
   TextVariants,
   Text,
   CardBody,
+  PageSection,
+  PageSectionVariants,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -31,18 +33,20 @@ const SinglePhoto = () => {
 
   return (
     <>
-      <TextContent>
-        <Text component={TextVariants.h1} style={{ marginBottom: '1rem' }}>
-          Album - {photoData.albumId}
-        </Text>
-      </TextContent>
-      <Card style={{ alignItems: 'center' }}>
-        <CardTitle>{photoData.title}</CardTitle>
-        <CardBody isFilled>
-          {' '}
-          <img src={photoData.url} alt="img"></img>
-        </CardBody>
-      </Card>
+      <PageSection variant={PageSectionVariants.light}>
+        <TextContent>
+          <Text component={TextVariants.h1} style={{ margin: '1rem' }}>
+            Album - {photoData.albumId}
+          </Text>
+        </TextContent>
+        <Card style={{ alignItems: 'center' }}>
+          <CardTitle>{photoData.title}</CardTitle>
+          <CardBody isFilled>
+            {' '}
+            <img src={photoData.url} alt="img"></img>
+          </CardBody>
+        </Card>
+      </PageSection>
     </>
   )
 }
