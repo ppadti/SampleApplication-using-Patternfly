@@ -1,14 +1,8 @@
 import '@patternfly/react-core/dist/styles/base.css'
 import {
   Page,
-  Masthead,
-  MastheadToggle,
-  MastheadMain,
-  MastheadBrand,
   PageSidebar,
   PageSection,
-  PageToggleButton,
-  Card,
   NavList,
   Nav,
   NavItem,
@@ -16,7 +10,7 @@ import {
   PageHeader,
 } from '@patternfly/react-core'
 import { Link, Route } from 'react-router-dom'
-import BarsIcon from '@patternfly/react-icons/dist/esm/icons/bars-icon'
+
 import React from 'react'
 import Posts from './Components/Post/Posts'
 import Album from './Components/Albums/Album'
@@ -24,8 +18,6 @@ import UserDetails from './Components/UserDetails'
 import PostId from './Components/Post/PostId'
 import Photo from './Components/Albums/Photo'
 import SinglePhoto from './Components/Albums/SinglePhoto'
-// import PostId from './Components/Post/PostId'
-// import PostId from './Components/PostId'
 
 function App() {
   const [isNavOpen, setIsNavOpen] = React.useState(false)
@@ -74,26 +66,24 @@ function App() {
   return (
     <>
       <Page header={header} sidebar={sidebar} role="main">
-        <PageSection isCenterAligned variant={PageSectionVariants.light}>
-          <Route exact path="/">
-            <Posts />
-          </Route>
-          <Route exact path="/album">
-            <Album />
-          </Route>
-          <Route exact path="/user">
-            <UserDetails />
-          </Route>
-          <Route exact path="/post/*">
-            <PostId />
-          </Route>
-          <Route exact path="/album/*/photos">
-            <Photo />
-          </Route>
-          <Route exact path="/album/*/photos/*">
-            <SinglePhoto />
-          </Route>
-        </PageSection>
+        <Route exact path="/">
+          <Posts />
+        </Route>
+        <Route exact path="/album">
+          <Album />
+        </Route>
+        <Route exact path="/user">
+          <UserDetails />
+        </Route>
+        <Route exact path="/post/*">
+          <PostId />
+        </Route>
+        <Route exact path="/album/*/photos">
+          <Photo />
+        </Route>
+        <Route exact path="/album/*/photos/*">
+          <SinglePhoto />
+        </Route>
       </Page>
     </>
   )

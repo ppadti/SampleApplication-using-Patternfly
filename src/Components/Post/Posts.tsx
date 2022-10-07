@@ -58,27 +58,30 @@ const Posts = () => {
           visible={true}
         />
       ) : ( */}
-        <PageSection>
-          <Gallery hasGutter>
-            {data?.slice(0, count).map((details) => (
-              <Button
-                key={details['id']}
-                isLarge
-                component="a"
-                variant="secondary"
-                onClick={() => {
-                  showDetails(details['id'])
-                }}
-              >
-                Post - {details['id']}
-              </Button>
-            ))}
-          </Gallery>
-          <br></br>
-          <Button variant="primary" onClick={addMore}>
-            Load more
-          </Button>
-        </PageSection>
+
+        <Gallery hasGutter>
+          {data?.slice(0, count).map((details) => (
+            <Button
+              key={details['id']}
+              isLarge
+              component="a"
+              variant="secondary"
+              onClick={() => {
+                showDetails(details['id'])
+              }}
+            >
+              Post - {details['id']}
+            </Button>
+          ))}
+        </Gallery>
+
+        <Button
+          variant="primary"
+          onClick={addMore}
+          style={{ marginTop: '1rem' }}
+        >
+          Load more
+        </Button>
       </PageSection>
     </>
   )
