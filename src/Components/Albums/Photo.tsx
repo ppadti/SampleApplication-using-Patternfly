@@ -11,6 +11,7 @@ import {
   Truncate,
   Button,
   CardFooter,
+  PageSectionVariants,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -44,41 +45,46 @@ const Photo = () => {
 
   return (
     <>
-      {albumError ? (
-        <TextContent>Something went wrong...</TextContent>
-      ) : (
-        <PageSection>
-          <TextContent>
-            <Text component={TextVariants.h1} style={{ marginBottom: '1rem' }}>
-              Album - {albumId}
-            </Text>
-          </TextContent>
-          <Gallery hasGutter>
-            {albumData.map((photo) => (
-              <GalleryItem key={photo['id']}>
-                <Card>
-                  <CardTitle>
-                    <Truncate content={photo['title']}></Truncate>
-                  </CardTitle>
-                  <CardBody>
-                    <img src={photo['thumbnailUrl']} alt="img"></img>
-                  </CardBody>
-                  <CardFooter>
-                    <Button
-                      variant="link"
-                      onClick={() => {
-                        showDetails(photo['id'])
-                      }}
-                    >
-                      View more
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </GalleryItem>
-            ))}
-          </Gallery>
-        </PageSection>
-      )}
+      <PageSection variant={PageSectionVariants.light}>
+        {albumError ? (
+          <TextContent>Something went wrong...</TextContent>
+        ) : (
+          <PageSection>
+            <TextContent>
+              <Text
+                component={TextVariants.h1}
+                style={{ marginBottom: '1rem' }}
+              >
+                Album - {albumId}
+              </Text>
+            </TextContent>
+            <Gallery hasGutter>
+              {albumData.map((photo) => (
+                <GalleryItem key={photo['id']}>
+                  <Card>
+                    <CardTitle>
+                      <Truncate content={photo['title']}></Truncate>
+                    </CardTitle>
+                    <CardBody>
+                      <img src={photo['thumbnailUrl']} alt="img"></img>
+                    </CardBody>
+                    <CardFooter>
+                      <Button
+                        variant="link"
+                        onClick={() => {
+                          showDetails(photo['id'])
+                        }}
+                      >
+                        View more
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </GalleryItem>
+              ))}
+            </Gallery>
+          </PageSection>
+        )}
+      </PageSection>
     </>
   )
 }
