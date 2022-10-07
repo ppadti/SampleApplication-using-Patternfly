@@ -26,6 +26,7 @@ import {
   Flex,
   FlexItem,
   PageSectionVariants,
+  CardFooter,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -43,6 +44,8 @@ const PostId = () => {
   >([])
   const [error, setError] = useState(null)
   const [postError, setPostError] = useState(null)
+  const [userError, setUserError] = useState(null)
+  const [userData, setUserData] = useState<{ [key: string]: any }>({})
   const [isExpanded, setIsExpanded] = React.useState(false)
   const drawerRef = React.useRef<HTMLDivElement>()
   const [showing, setShowing] = useState(false)
@@ -61,6 +64,7 @@ const PostId = () => {
         setPostError(error)
       })
   }, [])
+  console.log(postData.userId)
 
   useEffect(() => {
     axios(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
@@ -75,6 +79,19 @@ const PostId = () => {
   }, [])
 
   const count = commentData.length
+
+  useEffect(() => {
+    axios(`https://jsonplaceholder.typicode.com/users/${postData.userId}`)
+      .then((response) => {
+        setUserData(response.data)
+      })
+
+      .catch((error) => {
+        console.error('Error in loading data', error)
+        setUserError(error)
+      })
+  }, [postData.userId])
+  console.log(userData)
 
   const onExpand = () => {
     drawerRef.current && drawerRef.current.focus()
@@ -249,25 +266,42 @@ const PostId = () => {
       {postError ? (
         <TextContent>Something went wrong...</TextContent>
       ) : (
-        <>
-          <PageSection variant={PageSectionVariants.light}>
-            <Card style={{ marginBottom: '1rem' }}>
-              <CardTitle>Post - {postData.id}</CardTitle>
-              <CardTitle>{postData.title}</CardTitle>
-              <CardBody>{postData.body}</CardBody>
-            </Card>
+        <PageSection>
+          <Card style={{ marginBottom: '1rem' }}>
+            <CardTitle>
+              <TextContent>
+                <Text component={TextVariants.h1}>{postData.title}</Text>
+              </TextContent>{' '}
+              <Flex>
+                <FlexItem>
+                  <TextContent>
+                    <Text component={TextVariants.small}>
+                      {' '}
+                      by {userData.username}
+                    </Text>
+                  </TextContent>
+                </FlexItem>
+                <FlexItem>
+                  {' '}
+                  <Button isInline component="span" variant="link">
+                    - {userData.email}
+                  </Button>
+                </FlexItem>
+              </Flex>
+            </CardTitle>
+            <CardBody>{postData.body}</CardBody>
+          </Card>
 
-            <ActionGroup>
-              <Button
-                variant="secondary"
-                aria-expanded={isExpanded}
-                onClick={onClick}
-              >
-                Read Comments ({count})
-              </Button>
-            </ActionGroup>
-          </PageSection>
-        </>
+          <ActionGroup>
+            <Button
+              variant="secondary"
+              aria-expanded={isExpanded}
+              onClick={onClick}
+            >
+              Read Comments ({count})
+            </Button>
+          </ActionGroup>
+        </PageSection>
       )}
     </>
   )

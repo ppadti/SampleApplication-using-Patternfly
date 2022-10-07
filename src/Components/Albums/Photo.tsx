@@ -6,20 +6,25 @@ import {
   GalleryItem,
   PageSection,
   TextContent,
+  Text,
+  TextVariants,
   Truncate,
+  Button,
+  CardFooter,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
 const Photo = () => {
+  const history = useHistory()
   const location = useLocation()
-  const id: any = location.state
+  const albumId: any = location.state
   const [albumData, setAlbumData] = useState([])
   const [albumError, setAlbumError] = useState(null)
 
   useEffect(() => {
-    axios('https://jsonplaceholder.typicode.com/photos')
+    axios(`https://jsonplaceholder.typicode.com/albums/${albumId}/photos`)
       .then((response) => {
         setAlbumData(response.data)
       })
@@ -28,10 +33,14 @@ const Photo = () => {
         console.error('Error in loading data', error)
         setAlbumError(error)
       })
-  }, [id])
+  }, [albumId])
 
-  const filteredPhotos = albumData.filter((photo) => photo['albumId'] === id)
-  console.log(filteredPhotos.length)
+  const showDetails = (id: number) => {
+    history.push({
+      pathname: `/album/${albumId}/photos/${id}`,
+      state: id,
+    })
+  }
 
   return (
     <>
@@ -39,16 +48,31 @@ const Photo = () => {
         <TextContent>Something went wrong...</TextContent>
       ) : (
         <PageSection>
+          <TextContent>
+            <Text component={TextVariants.h1} style={{ marginBottom: '1rem' }}>
+              Album - {albumId}
+            </Text>
+          </TextContent>
           <Gallery hasGutter>
-            {filteredPhotos.map((album) => (
-              <GalleryItem key={album['id']}>
+            {albumData.map((photo) => (
+              <GalleryItem key={photo['id']}>
                 <Card>
                   <CardTitle>
-                    <Truncate content={album['title']}></Truncate>
+                    <Truncate content={photo['title']}></Truncate>
                   </CardTitle>
                   <CardBody>
-                    <img src={album['thumbnailUrl']} alt="img"></img>
+                    <img src={photo['thumbnailUrl']} alt="img"></img>
                   </CardBody>
+                  <CardFooter>
+                    <Button
+                      variant="link"
+                      onClick={() => {
+                        showDetails(photo['id'])
+                      }}
+                    >
+                      View more
+                    </Button>
+                  </CardFooter>
                 </Card>
               </GalleryItem>
             ))}

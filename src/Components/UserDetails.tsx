@@ -67,41 +67,48 @@ const UserDetails = () => {
 
   return (
     <>
-      <Pagination
-        perPageComponent="button"
-        itemCount={523}
-        perPage={perPage}
-        page={page}
-        onSetPage={onSetPage}
-        widgetId="pagination-options-menu-top"
-        onPerPageSelect={onPerPageSelect}
-      />
-      <TableComposable aria-label="Simple table" isStriped>
-        <Caption>
-          <b>User Details</b>
-        </Caption>
+      {!error && (
+        <>
+          {' '}
+          <Pagination
+            perPageComponent="button"
+            itemCount={10}
+            perPage={perPage}
+            page={page}
+            onSetPage={onSetPage}
+            widgetId="pagination-options-menu-top"
+            onPerPageSelect={onPerPageSelect}
+          />
+          <TableComposable aria-label="Simple table" isStriped>
+            <Caption>
+              <b>User Details</b>
+            </Caption>
 
-        <Thead>
-          <Tr>
-            <Th>{columnNames.name}</Th>
-            <Th>{columnNames.username}</Th>
-            <Th>{columnNames.email}</Th>
-            <Th>{columnNames.city}</Th>
-            <Th>{columnNames.phone}</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {data.map((user) => (
-            <Tr key={user.phone}>
-              <Td dataLabel={columnNames.name}>{user['name']}</Td>
-              <Td dataLabel={columnNames.username}>{user['username']}</Td>
-              <Td dataLabel={columnNames.email}>{user['email']}</Td>
-              <Td dataLabel={columnNames.city}>{user['address']['city']}</Td>
-              <Td dataLabel={columnNames.phone}>{user['phone']}</Td>
-            </Tr>
-          ))}
-        </Tbody>
-      </TableComposable>
+            <Thead>
+              <Tr>
+                <Th>{columnNames.name}</Th>
+                <Th>{columnNames.username}</Th>
+                <Th>{columnNames.email}</Th>
+                <Th>{columnNames.city}</Th>
+                <Th>{columnNames.phone}</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {data.map((user) => (
+                <Tr key={user.phone}>
+                  <Td dataLabel={columnNames.name}>{user['name']}</Td>
+                  <Td dataLabel={columnNames.username}>{user['username']}</Td>
+                  <Td dataLabel={columnNames.email}>{user['email']}</Td>
+                  <Td dataLabel={columnNames.city}>
+                    {user['address']['city']}
+                  </Td>
+                  <Td dataLabel={columnNames.phone}>{user['phone']}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </TableComposable>
+        </>
+      )}
     </>
   )
 }
