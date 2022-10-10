@@ -46,7 +46,6 @@ const PostId = () => {
   const [userError, setUserError] = useState(null)
   const [userData, setUserData] = useState<{ [key: string]: any }>({})
   const [isExpanded, setIsExpanded] = React.useState(false)
-  const drawerRef = React.useRef<HTMLDivElement>()
   const [showing, setShowing] = useState(false)
   const [comment, setComment] = useState('')
   const [name, setName] = React.useState('')
@@ -63,7 +62,6 @@ const PostId = () => {
         setPostError(error)
       })
   }, [])
-  console.log(postData.userId)
 
   useEffect(() => {
     axios(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
@@ -90,11 +88,6 @@ const PostId = () => {
         setUserError(error)
       })
   }, [postData.userId])
-  console.log(userData)
-
-  // const onExpand = () => {
-  //   drawerRef.current && drawerRef.current.focus()
-  // }
 
   const onClick = () => {
     setIsExpanded(!isExpanded)
@@ -315,7 +308,7 @@ const PostId = () => {
       </PageSection>
     </>
   )
-  
+
   return (
     <>
       <Drawer isExpanded={isExpanded}>
