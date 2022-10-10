@@ -3,6 +3,7 @@ import {
   Gallery,
   PageSection,
   TextContent,
+  Truncate,
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
@@ -50,7 +51,7 @@ const Album = () => {
                 showDetails(album['id'])
               }}
             >
-              Album - {album['id']}
+              <Truncate content={album['title']}></Truncate>
             </Button>
           ))}
         </Gallery>
