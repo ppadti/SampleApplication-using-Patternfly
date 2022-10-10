@@ -10,10 +10,9 @@ import {
 } from '@patternfly/react-core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 const SinglePhoto = () => {
-  const history = useHistory()
   const location = useLocation()
   const photoId: any = location.state
   const [photoData, setPhotoData] = useState<{ [key: string]: any }>({})
@@ -33,20 +32,24 @@ const SinglePhoto = () => {
 
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component={TextVariants.h1} style={{ margin: '1rem' }}>
-            Album - {photoData.albumId}
-          </Text>
-        </TextContent>
-        <Card style={{ alignItems: 'center' }}>
-          <CardTitle>{photoData.title}</CardTitle>
-          <CardBody isFilled>
-            {' '}
-            <img src={photoData.url} alt="img"></img>
-          </CardBody>
-        </Card>
-      </PageSection>
+      {photoError ? (
+        <TextContent>Something went wrong..</TextContent>
+      ) : (
+        <PageSection variant={PageSectionVariants.light}>
+          <TextContent>
+            <Text component={TextVariants.h1} style={{ margin: '1rem' }}>
+              Album - {photoData.albumId}
+            </Text>
+          </TextContent>
+          <Card style={{ alignItems: 'center' }}>
+            <CardTitle>{photoData.title}</CardTitle>
+            <CardBody isFilled>
+              {' '}
+              <img src={photoData.url} alt="img"></img>
+            </CardBody>
+          </Card>
+        </PageSection>
+      )}
     </>
   )
 }
