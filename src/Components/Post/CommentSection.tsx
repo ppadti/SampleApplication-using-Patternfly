@@ -1,101 +1,50 @@
 import {
   ActionGroup,
+  Avatar,
   Button,
   Card,
   CardBody,
   CardTitle,
-  PageSection,
-  TextContent,
-  Text,
-  TextVariants,
-  Avatar,
-  TextArea,
-  Form,
-  FormGroup,
-  TextInput,
-  Truncate,
-  Drawer,
-  DrawerPanelContent,
-  DrawerContent,
-  DrawerHead,
   DrawerActions,
   DrawerCloseButton,
-  Stack,
-  StackItem,
+  DrawerHead,
   DrawerPanelBody,
+  DrawerPanelContent,
   Flex,
   FlexItem,
-  PageSectionVariants,
+  Form,
+  FormGroup,
+  Stack,
+  StackItem,
+  Text,
+  TextArea,
+  TextContent,
+  TextInput,
+  TextVariants,
+  Truncate,
 } from '@patternfly/react-core'
 import axios from 'axios'
+
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+
+interface CommentSectionProps {
+  postId: any
+  onClose: (event: React.MouseEvent<HTMLDivElement>) => void
+}
 
 const avatarImg =
   'https://www.patternfly.org/v4/images/avatarImg.668560cdf25a4932ef9f711b4acad52d.svg'
 
-const PostId = () => {
-  const location = useLocation()
-  const postId: any = location.state
-  const [postData, setPostData] = useState<{ [key: string]: any }>({})
+export const CommentSection = ({ postId, onClose }: CommentSectionProps) => {
   const [commentData, setCommentData] = useState<
     { postId: number; id: number; name: string; email: string; body: string }[]
   >([])
   const [error, setError] = useState(null)
-  const [postError, setPostError] = useState(null)
-  const [userError, setUserError] = useState(null)
-  const [userData, setUserData] = useState<{ [key: string]: any }>({})
-  const [isExpanded, setIsExpanded] = React.useState(false)
   const [showing, setShowing] = useState(false)
   const [comment, setComment] = useState('')
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
 
-  useEffect(() => {
-    axios(`https://jsonplaceholder.typicode.com/posts/${postId}`)
-      .then((response) => {
-        setPostData(response.data)
-      })
-
-      .catch((error) => {
-        console.error('Error in loading data', error)
-        setPostError(error)
-      })
-  }, [])
-
-  useEffect(() => {
-    axios(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
-      .then((response) => {
-        setCommentData(response.data)
-      })
-
-      .catch((error) => {
-        console.error('Error in loading data', error)
-        setError(error)
-      })
-  }, [])
-
-  const count = commentData.length
-
-  useEffect(() => {
-    axios(`https://jsonplaceholder.typicode.com/users/${postData.userId}`)
-      .then((response) => {
-        setUserData(response.data)
-      })
-
-      .catch((error) => {
-        console.error('Error in loading data', error)
-        setUserError(error)
-      })
-  }, [postData.userId])
-
-  const onClick = () => {
-    setIsExpanded(!isExpanded)
-  }
-
-  const onCloseClick = () => {
-    setIsExpanded(false)
-  }
   const handleCommentSection = () => {
     setShowing(!showing)
     setComment('')
@@ -112,7 +61,7 @@ const PostId = () => {
       setCommentData((prevState) => [
         ...prevState,
         {
-          postId,
+          postId: postId,
           id: postId,
           name: name,
           email: email,
@@ -121,7 +70,6 @@ const PostId = () => {
       ])
     }
   }
-
   const handleNameChange = (name: string) => {
     setName(name)
   }
@@ -134,7 +82,21 @@ const PostId = () => {
     setComment(name)
   }
 
-  const panelContent = (
+  useEffect(() => {
+    axios(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
+      .then((response) => {
+        setCommentData(response.data)
+      })
+
+      .catch((error) => {
+        console.error('Error in loading data', error)
+        setError(error)
+      })
+  }, [postId])
+
+  const count = commentData.length
+
+  return (
     <DrawerPanelContent>
       <DrawerHead>
         <Stack>
@@ -145,7 +107,7 @@ const PostId = () => {
           </StackItem>
         </Stack>
         <DrawerActions>
-          <DrawerCloseButton onClick={onCloseClick} />
+          <DrawerCloseButton onClick={onClose} />
         </DrawerActions>
       </DrawerHead>
       <DrawerPanelBody>
@@ -260,62 +222,4 @@ const PostId = () => {
       </DrawerPanelBody>
     </DrawerPanelContent>
   )
-
-  const pageContent = (
-    <>
-      {' '}
-      <PageSection variant={PageSectionVariants.light}>
-        {postError ? (
-          <TextContent>Something went wrong...</TextContent>
-        ) : (
-          <>
-            <Card style={{ marginBottom: '1rem' }}>
-              <CardTitle>
-                <TextContent>
-                  <Text component={TextVariants.h1}>{postData.title}</Text>
-                </TextContent>{' '}
-                <Flex>
-                  <FlexItem>
-                    <TextContent>
-                      <Text component={TextVariants.small}>
-                        {' '}
-                        by {userData.username}
-                      </Text>
-                    </TextContent>
-                  </FlexItem>
-                  <FlexItem>
-                    {' '}
-                    <Button isInline component="span" variant="link">
-                      - {userData.email}
-                    </Button>
-                  </FlexItem>
-                </Flex>
-              </CardTitle>
-              <CardBody>{postData.body}</CardBody>
-            </Card>
-
-            <ActionGroup>
-              <Button
-                variant="secondary"
-                aria-expanded={isExpanded}
-                onClick={onClick}
-              >
-                Read Comments ({count})
-              </Button>
-            </ActionGroup>
-          </>
-        )}
-      </PageSection>
-    </>
-  )
-
-  return (
-    <>
-      <Drawer isExpanded={isExpanded}>
-        <DrawerContent panelContent={panelContent}>{pageContent}</DrawerContent>
-      </Drawer>
-    </>
-  )
 }
-
-export default PostId
