@@ -2,11 +2,9 @@ import '@patternfly/react-core/dist/styles/base.css'
 import {
   Page,
   PageSidebar,
-  PageSection,
   NavList,
   Nav,
   NavItem,
-  PageSectionVariants,
   PageHeader,
 } from '@patternfly/react-core'
 import { Link, Route } from 'react-router-dom'
@@ -15,7 +13,7 @@ import React from 'react'
 import Posts from './Components/Post/Posts'
 import Album from './Components/Albums/Album'
 import UserDetails from './Components/UserDetails'
-import PostId from './Components/Post/PostId'
+import PostId from './Components/Post/SinglePost'
 import Photo from './Components/Albums/Photo'
 import SinglePhoto from './Components/Albums/SinglePhoto'
 
