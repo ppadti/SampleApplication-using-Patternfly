@@ -105,6 +105,7 @@ export const CommentSection = ({ postId, onClose }: CommentSectionProps) => {
               <Text component="h1">Comments ({count})</Text>
             </TextContent>
           </StackItem>
+          <StackItem></StackItem>
         </Stack>
         <DrawerActions>
           <DrawerCloseButton onClick={onClose} />
@@ -118,10 +119,10 @@ export const CommentSection = ({ postId, onClose }: CommentSectionProps) => {
           </TextContent>
         ) : (
           <>
-            {commentData.map((comment) => (
-              <>
-                <Card style={{ margin: '1rem' }}>
-                  <CardTitle>
+            <Stack hasGutter>
+              {commentData.map((comment) => (
+                <>
+                  <StackItem>
                     <Flex style={{ alignItems: 'center' }}>
                       <Flex direction={{ default: 'column' }}>
                         <FlexItem>
@@ -149,74 +150,66 @@ export const CommentSection = ({ postId, onClose }: CommentSectionProps) => {
                         </FlexItem>
                       </Flex>
                     </Flex>
-                  </CardTitle>
-                  <CardBody>{comment.body}</CardBody>
-                </Card>
-              </>
-            ))}
-            <Button
-              variant="primary"
-              onClick={handleCommentSection}
-              style={{ marginBottom: '1rem' }}
-            >
-              Add Comment
-            </Button>
-            {showing && (
-              <Form>
-                <FormGroup
-                  label="Full name"
-                  isRequired
-                  fieldId="simple-form-name-01"
-                >
-                  <TextInput
+                  </StackItem>
+                  <StackItem>{comment.body}</StackItem>
+                </>
+              ))}
+              <Button variant="primary" onClick={handleCommentSection}>
+                Add Comment
+              </Button>
+              {showing && (
+                <Form>
+                  <FormGroup
+                    label="Full name"
                     isRequired
-                    type="text"
-                    id="simple-form-name-01"
-                    name="simple-form-name-01"
-                    aria-describedby="simple-form-name-01-helper"
-                    value={name}
-                    onChange={handleNameChange}
-                  />
-                </FormGroup>
-                <FormGroup
-                  label="Email"
-                  isRequired
-                  fieldId="simple-form-email-01"
-                >
-                  <TextInput
-                    isRequired
-                    type="email"
-                    id="simple-form-email-01"
-                    name="simple-form-email-01"
-                    value={email}
-                    onChange={handleEmailChange}
-                  />
-                </FormGroup>
-                <FormGroup
-                  label="Your comments"
-                  isRequired
-                  fieldId="horizontal-form-exp"
-                >
-                  <TextArea
-                    placeholder="Enter your comment"
-                    value={comment}
-                    name="inputGroup-with-textarea"
-                    id="inputGroup-with-textarea"
-                    aria-label="textarea with button"
-                    onChange={updateComment}
-                  ></TextArea>
-                </FormGroup>
-                <ActionGroup>
-                  <Button
-                    variant="primary"
-                    onClick={addComment}
-                    style={{ marginBottom: '1rem' }}
+                    fieldId="simple-form-name-01"
                   >
-                    Add
-                  </Button>
-                </ActionGroup>
-              </Form>
-            )}
+                    <TextInput
+                      isRequired
+                      type="text"
+                      id="simple-form-name-01"
+                      name="simple-form-name-01"
+                      aria-describedby="simple-form-name-01-helper"
+                      value={name}
+                      onChange={handleNameChange}
+                    />
+                  </FormGroup>
+                  <FormGroup
+                    label="Email"
+                    isRequired
+                    fieldId="simple-form-email-01"
+                  >
+                    <TextInput
+                      isRequired
+                      type="email"
+                      id="simple-form-email-01"
+                      name="simple-form-email-01"
+                      value={email}
+                      onChange={handleEmailChange}
+                    />
+                  </FormGroup>
+                  <FormGroup
+                    label="Your comments"
+                    isRequired
+                    fieldId="horizontal-form-exp"
+                  >
+                    <TextArea
+                      placeholder="Enter your comment"
+                      value={comment}
+                      name="inputGroup-with-textarea"
+                      id="inputGroup-with-textarea"
+                      aria-label="textarea with button"
+                      onChange={updateComment}
+                    ></TextArea>
+                  </FormGroup>
+                  <ActionGroup>
+                    <Button variant="primary" onClick={addComment}>
+                      Add
+                    </Button>
+                  </ActionGroup>
+                </Form>
+              )}
+            </Stack>
           </>
         )}
       </DrawerPanelBody>
