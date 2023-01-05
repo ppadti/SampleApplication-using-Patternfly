@@ -40,18 +40,18 @@ function App() {
       theme="dark"
       aria-label={'global'}
     >
-      <NavList id="nav-list-simple">
-        <NavItem id={'connectors'} ouiaId="smart-events">
+      <NavList>
+        <NavItem>
           <Link to="/">Post</Link>
         </NavItem>
       </NavList>
-      <NavList id="nav-list-simple">
-        <NavItem id={'connectors'} ouiaId="smart-events">
+      <NavList>
+        <NavItem>
           <Link to="/album">Albums</Link>
         </NavItem>
       </NavList>
-      <NavList id="nav-list-simple">
-        <NavItem id={'connectors'} ouiaId="smart-events">
+      <NavList>
+        <NavItem>
           <Link to="/user">User Details</Link>
         </NavItem>
       </NavList>
